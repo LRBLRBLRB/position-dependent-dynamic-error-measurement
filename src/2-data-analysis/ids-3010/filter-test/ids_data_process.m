@@ -24,17 +24,9 @@ DISP_MinPeakProminence = 10; % Measured point A, B, D
 VELO_MinPeakProminence = 10;
 ACCEL_MinPeakProminence = 0.5;
 isFluctuation = false; % false for measured A, B, C, and J5 in D;
-
-%% --------------------------- 位移数据处理：开始方向确认 ---------------------------
-% 不同的数据，测量的开始位置和方向并未统一，需要在此统一为：
-% X轴数据以X=-1000为起点沿负方向遍历，Y轴数据以Y=0为起点沿正方形遍历（即与几何误差表一致）
-% *******************************************************************************
-% ************* 不同测点的情况会有不同，在换测点时必须留意此处！！！！！ *************
-% ************* X轴A、D测点只需要将起始点平移到X=-1000即可             *************
-% ************* X轴B测点需取反，再将起始点平移到X=-3000                *************
-% ************* X轴C测点
-% *******************************************************************************
-
+%%
+%[text] ## --------------------------- 位移数据处理：开始方向确认 ---------------------------
+%[text] 不同的数据，测量的开始位置和方向并未统一，需要在此统一为： X轴数据以X=-1000为起点沿负方向遍历，Y轴数据以Y=0为起点沿正方形遍历（即与几何误差表一致）  **\*** **不同测点的情况会有不同，在换测点时必须留意此处！！！！！ \*** **\*** **X轴A、D测点只需要将起始点平移到X=-1000即可 \*** **\*** **X轴B测点需取反，再将起始点平移到X=-3000 \*** **\*** **X轴C测点 \***\*
 % X轴A、D测点：X=-1000~X=-5500
 % idsData.Displacement = idsData.Displacement - 1000 + idsData.Displacement(1);
 % X轴B测点：X=-3000~X=-7000
@@ -53,31 +45,23 @@ ylabel(ax1, 'Displacement (mm)');
 drawnow;
 
 clear fig1 ax1;
-
-%% ---------------------------------- 位移数据处理 ----------------------------------
-% if isempty(gcp('nocreate'))
-%     parpool;
-% end
-% tmpDispSmooth = zeros(size(tmpDisp));
-% block_size = 10000;
-% num_blocks = ceil(length(tmpDisp) / block_size);
-% % 并行分块处理数据
-% tic
-% for i = 1:num_blocks
-%     temp_smooth = zeros(1, block_size);
-% 
-%     start_idx = (i-1) * block_size + 1;
-%     end_idx = min(i * block_size, length(tmpDisp));
-% 
-%     temp_smooth(1:(end_idx-start_idx+1)) = smoothdata(tmpDisp(start_idx:end_idx), ...
-%         'sgolay', 51, 'SamplePoints', tmpTime(start_idx:end_idx), 'Degree', 2);
-%     tmpDispSmooth(start_idx:end_idx) = temp_smooth(1:(end_idx-start_idx+1));
-% end
-% toc
-% tmpDispSmooth = smoothdata(tmpDisp, 'sgolay', 7, 'SamplePoints', tmpTime, 'Degree', 3);
-% hold on;
-% plot(tmpTime, tmpDispSmooth);
-
+%%
+%[text] ## ---------------------------------- 位移数据处理 ----------------------------------
+%[text] if isempty(gcp('nocreate')) parpool; end tmpDispSmooth = zeros(size(tmpDisp)); block\_size = 10000; num\_blocks = ceil(length(tmpDisp) / block\_size); % 并行分块处理数据 tic for i = 1:num\_blocks temp\_smooth = zeros(1, block\_size);
+%[text] ```
+%[text]    start_idx = (i-1) * block_size + 1;
+%[text]    end_idx = min(i * block_size, length(tmpDisp));
+%[text] ```
+%[text] ```
+%[text]    temp_smooth(1:(end_idx-start_idx+1)) = smoothdata(tmpDisp(start_idx:end_idx), ...
+%[text]        'sgolay', 51, 'SamplePoints', tmpTime(start_idx:end_idx), 'Degree', 2);
+%[text]    tmpDispSmooth(start_idx:end_idx) = temp_smooth(1:(end_idx-start_idx+1));
+%[text] end
+%[text] toc
+%[text] tmpDispSmooth = smoothdata(tmpDisp, 'sgolay', 7, 'SamplePoints', tmpTime, 'Degree', 3);
+%[text] hold on;
+%[text] plot(tmpTime, tmpDispSmooth);
+%[text] ```
 % ------------ 滤波与抽样 ------------
 % Data low-pass filtering for denoising
 WAVE_NAME = 'sym9'; % 小波基
@@ -160,19 +144,9 @@ idsData.Time = downsampleTime;
 idsData.Displacement = geometricRemoveDisp;
 
 clear downsampleTime downsampleDisp geometricRemoveDisp dispWavelet ax2 fig2;
-
-%% --------------------------- 速度滤波处理（为了加速度计算） ---------------------------
-% 速度曲线滤波
-% idsData.velo_filtered = idsData.velo;
-% 高斯滤波，不能解决匀加减速过程，或者匀速过程抖动对加速度计算的影响。
-% siemensData.velo1_filtered = filter_gaussian(100, 1, siemensData.velo);
-% 三次样条加权平滑
-% veloPeaks = peak_segmentation(idsData.veloTime, idsData.velo, [], ...
-%     "IsNormalization", false, ...
-%     "MinPeakDistance", 4, "MinPeakProminence", 10000, 'MinPeakWidth', 1);
-% weights = ones(size(idsData.veloTime));
-% weightFactor = 1;
-% weights(veloPeaks.ind) = weights(veloPeaks.ind) * weightFactor;
+%%
+%[text] ## --------------------------- 速度滤波处理（为了加速度计算） ---------------------------
+%[text] 速度曲线滤波 idsData.velo\_filtered = idsData.velo; 高斯滤波，不能解决匀加减速过程，或者匀速过程抖动对加速度计算的影响。 siemensData.velo1\_filtered = filter\_gaussian(100, 1, siemensData.velo); 三次样条加权平滑 veloPeaks = peak\_segmentation(idsData.veloTime, idsData.velo, \[\], ... "IsNormalization", false, ... "MinPeakDistance", 4, "MinPeakProminence", 10000, 'MinPeakWidth', 1); weights = ones(size(idsData.veloTime)); weightFactor = 1; weights(veloPeaks.ind) = weights(veloPeaks.ind) \* weightFactor;
 sp = spaps(idsData.veloTime, idsData.velo, 5000000, [], 2);
 idsData.velo_filtered = fnval(sp, idsData.veloTime);
 % clear sp veloPeaks;
@@ -220,27 +194,11 @@ ylabel('Acceleration (m/s^2)');
 legend;
 linkaxes([ax1, ax2, ax3], 'x');
 drawnow;
-
 %%
-% fc = 5;
-% % 输入信号分解
-% x_sig_est = lowpass(diff(idsData.Displacement), fc, 1/(idsData.Time(2) - idsData.Time(1)));
-% x_noise_est = diff(idsData.Displacement) - x_sig_est;
-% 
-% % 输出信号分解
-% y_sig_est = lowpass(idsData.velo_filtered, fc, sampleRate);
-% y_noise_est = idsData.velo_filtered - y_sig_est;
-% 
-% snr_in_est  = 10*log10(sum(x_sig_est.^2) / sum(x_noise_est.^2));
-% snr_out_est = 10*log10(sum(y_sig_est.^2) / sum(y_noise_est.^2));
-% snr_gain_est = snr_out_est - snr_in_est;
-% 
-% figure; 
-% plot(theo_accelTime,theo_accel);
-% plot(theo_veloTime,theo_velo);
-% hold on;
-% plot(idsData.accelTime, idsData.accel);
-
+%[text] fc = 5; % 输入信号分解 x\_sig\_est = lowpass(diff(idsData.Displacement), fc, 1/(idsData.Time(2) - idsData.Time(1))); x\_noise\_est = diff(idsData.Displacement) - x\_sig\_est;
+%[text] % 输出信号分解 y\_sig\_est = lowpass(idsData.velo\_filtered, fc, sampleRate); y\_noise\_est = idsData.velo\_filtered - y\_sig\_est;
+%[text] snr\_in\_est = 10\*log10(sum(x\_sig\_est.^2) / sum(x\_noise\_est.^2)); snr\_out\_est = 10\*log10(sum(y\_sig\_est.^2) / sum(y\_noise\_est.^2)); snr\_gain\_est = snr\_out\_est - snr\_in\_est;
+%[text] figure; plot(theo\_accelTime,theo\_accel); plot(theo\_veloTime,theo\_velo); hold on; plot(idsData.accelTime, idsData.accel);
 % 画加速度原始图像
 % fig5 = figure('name', '【IDS】加速度图像');
 % hLine = plot(idsData.accelTime, idsData.accel, 'LineWidth', 1);
@@ -250,9 +208,9 @@ drawnow;
 % ylim([min(idsData.accel), max(idsData.accel)]);
 % xlabel('Time (s)');
 % ylabel('Acceleration (m/s^2)');
-
-%% --------------------------- 位移分段分析 ---------------------------
-% 使用findpeaks函数，排除噪声并寻找所有局部最值。计算局部最值离理想值的差值，作为偏差
+%%
+%[text] ## --------------------------- 位移分段分析 ---------------------------
+%[text] 使用findpeaks函数，排除噪声并寻找所有局部最值。计算局部最值离理想值的差值，作为偏差
 shiftTime = ceil(0.1 * sampleRate); % the time interval around the peak/valley value
 dispPeaks = peak_segmentation(idsData.Time, idsData.Displacement, [], ...
     "IsNormalization", false, "MinPeakProminence", DISP_MinPeakProminence);
@@ -274,8 +232,8 @@ end
 plot_peaks(idsData.Time, idsData.Displacement, dispPeaks(1:2:end - 1, :), dispPeaks(2:2:end, :), ...
     "PlotName", "【IDS】位移峰值");
 drawnow;
-
-%% --------------------------- 速度指标计算 ---------------------------
+%%
+%[text] ## --------------------------- 速度指标计算 ---------------------------
 ADJACENT_PARAM = 0.2 * sampleRate; % A3J5要改成1 * sampleRate
 % Extract velocity segments from the signal
 [velocitySegment, desiredValue, tLim1End] = velocity_segmentation(idsData.velo_filtered, ADJACENT_PARAM, 'case', 'IDS');
@@ -428,15 +386,15 @@ legend("Peak error", "Overshoot percent", "Location", "best");
 % xlim(tLim);
 % legend("Oscillation frequency", "Location", "best");
 drawnow;
-
-%% ------------------------------ 加速度指标计算 ------------------------------
-% 由于加速度数据的鲁棒性远远不及位移和速度，故分段和指标计算后的数据，单独检查后再拷贝到excel文件中
+%%
+%[text] ## ------------------------------ 加速度指标计算 ------------------------------
+%[text] 由于加速度数据的鲁棒性远远不及位移和速度，故分段和指标计算后的数据，单独检查后再拷贝到excel文件中
 [accelPeaks,accelValleys] = peak_segmentation(idsData.accelTime, idsData.accel, ...
     theoAccel, "PlotName", "【IDS】加速度峰谷值", "MinPeakDistance", ACCEL_MinPeakProminence);
 drawnow;
-
-%% --------------------------------- 指标整理 ---------------------------------
-% 位移、速度指标按Excel记录表格整理
+%%
+%[text] ## --------------------------------- 指标整理 ---------------------------------
+%[text] 位移、速度指标按Excel记录表格整理
 paramExcel = save_excel(dispPeaks, veloParam);
 
 % 加速度指标另外计算
@@ -451,8 +409,8 @@ end
 
 % 合并加速度表格和位移速度表格
 paramExcel = [paramExcel, accelExcel];
-
-%% ----------------------------------- 收尾 -----------------------------------
+%%
+%[text] ## ----------------------------------- 收尾 -----------------------------------
 [pathstr, name, ~] = fileparts(FILE_PATH);
 filePath1 = fullfile(pathstr, name);
 if ~isfolder(filePath1)
@@ -467,3 +425,9 @@ fig_modal;
 fprintf("The data extraction process for the file %s is completed. \n", fileName);
 
 rmpath(genpath('..'));
+
+%[appendix]{"version":"1.0"}
+%---
+%[metadata:view]
+%   data: {"layout":"onright"}
+%---
