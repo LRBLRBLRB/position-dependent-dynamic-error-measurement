@@ -13,7 +13,7 @@ screenWidth = screenSize(3);
 screenHeight = screenSize(4);
 
 % 查找所有图窗
-figs = findall(groot, 'Type', 'figure');
+figs = findobj('Type', 'figure');
 
 % 可用的屏幕区域（去除任务栏和标题栏）
 usableHeight = screenHeight - titlebarHeight;
