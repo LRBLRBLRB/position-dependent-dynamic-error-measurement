@@ -37,6 +37,15 @@
 
 IDS 数据处理模块的更详细说明见 [`src/2-data-analysis/ids-3010/README.md`](src/2-data-analysis/ids-3010/README.md)。
 
+## 文档导航
+
+顶层 README 只保留项目级信息和各模块入口；当某个子目录本身就是相对独立的处理流程时，可以在该目录下放置模块级 README。这是开源项目中很常见的组织方式，例如 `examples/`、`docs/`、`tools/` 或某个独立数据处理模块都会这样做。
+
+| 文档 | 内容 |
+| --- | --- |
+| [`README.md`](README.md) | 项目简介、环境要求、目录结构、快速开始和整体流程。 |
+| [`src/2-data-analysis/ids-3010/README.md`](src/2-data-analysis/ids-3010/README.md) | IDS-3010 位移测量数据处理模块的入口、参数准备、调用关系、文件说明和输出结果。 |
+
 ## 环境要求
 
 ### MATLAB
