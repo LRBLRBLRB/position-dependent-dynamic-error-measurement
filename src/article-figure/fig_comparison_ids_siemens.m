@@ -18,8 +18,8 @@ idsData = struct2table(idsData);
 
 % Data low-pass filtering for denoising
 WAVE_NAME = 'sym9'; % 小波基
-NUM_LEVEL = min(21, wmaxlev(length(idsData.Displacement),WAVE_NAME)); % 分解层数，越高越平滑
-dispWavelet = wdenoise(idsData.Displacement,NUM_LEVEL, ...
+NUM_LEVEL = min(21, wmaxlev(length(idsData.Displacement), WAVE_NAME)); % 分解层数，越高越平滑
+dispWavelet = wdenoise(idsData.Displacement, NUM_LEVEL, ...
     Wavelet=WAVE_NAME, ...
     DenoisingMethod='Bayes', ...
     ThresholdRule='Soft', ...
@@ -44,7 +44,7 @@ idsData.Displacement = geometricRemoveDisp;
 
 %% CNC displacement
 FILE_PATH = "D:\WorkingDir\Experiments\202406-mms-dynamics\Siemens results mat\20240529 Siemens\DYB_A3J40.mat";
-[~,fileName,~] = fileparts(FILE_PATH);
+[~, fileName, ~] = fileparts(FILE_PATH);
 theoAccelPattern = 'A(\d+)'; % 匹配"A"后面的数字
 match = regexp(fileName, theoAccelPattern, 'tokens');
 THEORETICAL_ACCEL = str2double(match{1}{1});
@@ -110,7 +110,7 @@ time_aligned = (0:length(ids_aligned) - 1) / idsSampleRate;
 % end
 % [maxMissalignValue, maxMissalignIdx] = max(y_aligned{1} - ids_aligned);
 
-figure('Name','互相关结果');
+figure('Name', '互相关结果');
 tiledlayout(3, 1);
 nexttile;
 stem(lags, corrValue);
@@ -190,7 +190,7 @@ plot(idsData.Time, idsData.Displacement - siemensInterp.int2);
 drawnow;
 
 %% 论文图
-% figure('Name','Displacement Comparison');
+% figure('Name', 'Displacement Comparison');
 % tiledlayout(2, 1);
 % ax1 = nexttile;
 % plot(idsData.Time, idsData.Displacement);
@@ -208,7 +208,7 @@ lineWidthSie = 0.5;
 faceColor = [0.929                     0.694                     0.125];
 faceAlpha = 1;
 
-figure('Name','Displacement Comparison Bar');
+figure('Name', 'Displacement Comparison Bar');
 tiledlayout(3, 1);
 ax1 = nexttile;
 colororder([lineColorIDS; faceColor]);

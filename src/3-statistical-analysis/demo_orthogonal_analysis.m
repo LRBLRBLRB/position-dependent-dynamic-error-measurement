@@ -22,8 +22,8 @@ factor_names = {'A', 'B', 'C', 'D', 'E', 'F', 'G'};
 % 步骤 3：极差分析
 range_values = zeros(1, size(orthogonal_design, 2));
 for i = 1:size(orthogonal_design, 2)
-    levels_i = unique(orthogonal_design(:,i));
-    means = arrayfun(@(x) mean(Y(orthogonal_design(:,i) == x)), levels_i);
+    levels_i = unique(orthogonal_design(:, i));
+    means = arrayfun(@(x) mean(Y(orthogonal_design(:, i) == x)), levels_i);
     range_values(i) = max(means) - min(means);
 end
 [~, idx] = sort(range_values, 'descend');
@@ -33,8 +33,8 @@ disp('因素重要性排序：'), disp(factor_names(idx));
 figure;
 for i = 1:length(factor_names)
     subplot(3, 3, i);
-    levels_i = unique(orthogonal_design(:,i));
-    means = arrayfun(@(x) mean(Y(orthogonal_design(:,i) == x)), levels_i);
+    levels_i = unique(orthogonal_design(:, i));
+    means = arrayfun(@(x) mean(Y(orthogonal_design(:, i) == x)), levels_i);
     plot(levels_i, means, '-o', 'LineWidth', 1.5);
     title(factor_names{i}); grid on;
 end

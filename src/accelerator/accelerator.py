@@ -69,7 +69,7 @@ csv_filename = 'D:\\Research\\experiments\\ADXL results\\20240806 ADXL\\XAB_Y320
 
 stop_event = threading.Event()
 data_thread = threading.Thread(target=read_and_store_tcp_data, args=(host, port, csv_filename, stop_event))
-stop_thread = threading.Thread(target=stop_on_keypress, args=(stop_event,))
+stop_thread = threading.Thread(target=stop_on_keypress, args=(stop_event, ))
 
 data_thread.start()
 stop_thread.start()

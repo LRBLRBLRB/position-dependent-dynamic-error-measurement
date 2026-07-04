@@ -1,4 +1,4 @@
-function [velocitySegment,desiredValue,endIndex] = velocity_segmentation(v,adjacentParam,options)
+function [velocitySegment, desiredValue, endIndex] = velocity_segmentation(v, adjacentParam, options)
 %VELOCITY_SEGMENTATION Extract speed-varying segments for velocity
 %
 % Principles:
@@ -6,17 +6,17 @@ function [velocitySegment,desiredValue,endIndex] = velocity_segmentation(v,adjac
 %   that start at the zero-locations, and end with horizontal lines
 
 arguments
-    v (:,1)
+    v (:, 1)
     adjacentParam
-    options.case {mustBeMember(options.case,{'Siemens','IDS'})} = 'IDS'
+    options.case {mustBeMember(options.case, {'Siemens', 'IDS'})} = 'IDS'
 end
 
 %% search for the starting locations for each segments
 % only one zero-location can be kept before "zeroStart"
-zeroStart = find(abs(v) > 1000,1,'first');
+zeroStart = find(abs(v) > 1000, 1, 'first');
 
 % only one zero-location can be kept after "zeroEnd"
-zeroEnd = find(abs(v) > 1000,1,'last');
+zeroEnd = find(abs(v) > 1000, 1, 'last');
 
 % zero-location sequence, to be the starting points of velocity segments
 % (only keep those between zeroStart and zeroEnd)
@@ -51,7 +51,7 @@ insertInd = find(diff(zeroCrossings(1:end - 1)) >= diffThreshold);
 
 for ii = 1:length(insertInd)
     tmp = abs(v(zeroCrossings(insertInd(ii)):zeroCrossings(insertInd(ii) + 1)));
-    insertValue = find(tmp >= 15000 & tmp <= 20000,1,'last');
+    insertValue = find(tmp >= 15000 & tmp <= 20000, 1, 'last');
     zeroCrossings = [zeroCrossings(1:insertInd(ii)); ...
         zeroCrossings(insertInd(ii)) + insertValue;...
         zeroCrossings(insertInd(ii) + 1:end)];
@@ -68,8 +68,8 @@ end
 % figure; plot(v); hold on; scatter(zeroCrossings, v(zeroCrossings));
 
 %% search for the desired value & search for the ended location for each segments
-desiredValue = zeros(length(zeroCrossings) - 1,1);
-changePoints = zeros(length(zeroCrossings) - 1,1);
+desiredValue = zeros(length(zeroCrossings) - 1, 1);
+changePoints = zeros(length(zeroCrossings) - 1, 1);
 for ii = 1:length(zeroCrossings) - 1
     % seek for desired value
     if v(zeroCrossings(ii)) > 5000 % special cases one
@@ -96,7 +96,7 @@ for ii = 1:length(zeroCrossings) - 1
     %   instead of the last zero location of velocity  
     tmp = min(zeroCrossings(ii) + find( ...
         abs(v(zeroCrossings(ii):zeroCrossings(ii + 1))) - abs(desiredValue(ii)) >= 0, ...
-        1,'last'),length(v));
+        1, 'last'), length(v));
     if isempty(tmp) 
         % if empty, that means the velocity cannot reach the desired value
         % then use the last point which reaches 90% of the point as the terminal
@@ -104,8 +104,8 @@ for ii = 1:length(zeroCrossings) - 1
         % changePoints(ii) = zeroCrossings(ii) + find( ...
         %     abs(v(zeroCrossings(ii):zeroCrossings(ii + 1)) - v(zeroCrossings(ii))) ...
         %     >= 0.9*abs(v(zeroCrossings(ii)) - max(abs(v(zeroCrossings(ii):zeroCrossings(ii + 1))))), ...
-        %     1,'last');
-        [~,changePoints(ii)] = max(abs(v(zeroCrossings(ii):zeroCrossings(ii + 1))));
+        %     1, 'last');
+        [~, changePoints(ii)] = max(abs(v(zeroCrossings(ii):zeroCrossings(ii + 1))));
         changePoints(ii) = zeroCrossings(ii) + changePoints(ii);
     else
         changePoints(ii) = tmp;
@@ -115,7 +115,7 @@ end
 
 % find the ending points of velocity segments
 % tReverse = flip(t);
-% [~,locs] = findpeaks(flip(v),t,"MinPeakHeight",3000,"MaxPeakWidth",2.5);
+% [~, locs] = findpeaks(flip(v), t, "MinPeakHeight", 3000, "MaxPeakWidth", 2.5);
 % changePoints1 = find(tReverse == locs(1));
 % for ii = 1:length(locs) - 1
 %     if locs(ii + 1) - locs(ii) > 0.1
@@ -124,7 +124,7 @@ end
 % end
 % changePoints1 = length(v) - changePoints1(:);
 % 
-% [~,locs] = findpeaks(flip(-1*v),t,"MinPeakHeight",3000,"MaxPeakWidth",2.5);
+% [~, locs] = findpeaks(flip(-1*v), t, "MinPeakHeight", 3000, "MaxPeakWidth", 2.5);
 % changePoints2 = find(tReverse == locs(1));
 % for ii = 1:length(locs) - 1
 %     if locs(ii + 1) - locs(ii) > 0.1
@@ -140,7 +140,7 @@ end
 % changePoints = find(diffV > threshold) + 1;
 
 %% output
-velocitySegment = [[zeroCrossings(1);changePoints(1:end - 1)],changePoints];
-% velocitySegment = [zeroCrossings(1:end - 1),changePoints];
+velocitySegment = [[zeroCrossings(1);changePoints(1:end - 1)], changePoints];
+% velocitySegment = [zeroCrossings(1:end - 1), changePoints];
 endIndex = zeroCrossings(end);
 end

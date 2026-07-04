@@ -7,7 +7,7 @@ set(groot, 'DefaultAxesFontName', 'Times New Roman', 'DefaultAxesFontSize', 12);
 set(groot, 'DefaultTextFontName', 'Times New Roman', 'DefaultTextFontSize', 12);
 set(groot, 'DefaultAxesXMinorTick', 'on');
 
-% colorOrder = get(gca,'colororder');
+% colorOrder = get(gca, 'colororder');
 
 % Load and preprocess the axial data
 FILE_PATH_A = char(['D:\OneDrive - sjtu.edu.cn\Research\Projects\202309_动态误差' ...
@@ -90,9 +90,9 @@ end
 
 %% 统计分析
 % X = [ones(size(YData, 1), 1), YData{:, factorColumn}]; % 添加常数项到数据矩阵
-% ano_p = cell(1,length(responseColumn));
-% ano_tbl = cell(1,length(responseColumn));
-% ano_stats = cell(1,length(responseColumn));
+% ano_p = cell(1, length(responseColumn));
+% ano_tbl = cell(1, length(responseColumn));
+% ano_stats = cell(1, length(responseColumn));
 % for r = 1:length(responseColumn)
 %     % ---------------- 正态性检验 ----------------
 %     currentResponse = YData{:, responseColumn(r)};
@@ -180,7 +180,7 @@ end
 %     tmpColumn(tmpColumn == ii) = [];
 % 
 %     % 对除了XData.Properties.VariableNames{ii}的其他所有因素分组
-%     % groupNumber: 组编号，其第i个元素表示YData(i,:)对应组因素groupFactor中的行号（可以理解为YData(i,:)属于第groupNumber(i)组）
+%     % groupNumber: 组编号，其第i个元素表示YData(i, :)对应组因素groupFactor中的行号（可以理解为YData(i, :)属于第groupNumber(i)组）
 %     % groupNumber: 组因素，即各个组的因素取值情况（从小到大排序）
 %     [groupNumber, groupFactor] = findgroups(YData(:, YData.Properties.VariableNames(tmpColumn)));
 %     tmpColumnUnique = unique(YData(:, ii));
@@ -258,7 +258,7 @@ tmpColumn = factorColumnIndex;
 tmpColumn(tmpColumn == ii) = [];
 
 % 对除了XData.Properties.VariableNames{ii}的其他所有因素分组
-% groupNumber: 组编号，其第i个元素表示YData(i,:)对应组因素groupFactor中的行号（可以理解为YData(i,:)属于第groupNumber(i)组）
+% groupNumber: 组编号，其第i个元素表示YData(i, :)对应组因素groupFactor中的行号（可以理解为YData(i, :)属于第groupNumber(i)组）
 % groupNumber: 组因素，即各个组的因素取值情况（从小到大排序）
 [groupNumber, groupFactor] = findgroups(YData(:, YData.Properties.VariableNames(tmpColumn)));
 tmpColumnUnique = unique(YData(:, ii));
@@ -339,7 +339,7 @@ tmpColumn = factorColumnIndex;
 tmpColumn(tmpColumn == ii) = [];
 
 % 对除了XData.Properties.VariableNames{ii}的其他所有因素分组
-% groupNumber: 组编号，其第i个元素表示YData(i,:)对应组因素groupFactor中的行号（可以理解为YData(i,:)属于第groupNumber(i)组）
+% groupNumber: 组编号，其第i个元素表示YData(i, :)对应组因素groupFactor中的行号（可以理解为YData(i, :)属于第groupNumber(i)组）
 % groupNumber: 组因素，即各个组的因素取值情况（从小到大排序）
 [groupNumber, groupFactor] = findgroups(YData(:, YData.Properties.VariableNames(tmpColumn)));
 tmpColumnUnique = unique(YData(:, ii));
@@ -414,7 +414,7 @@ tmpColumn = factorColumnIndex;
 tmpColumn(tmpColumn == ii) = [];
 
 % 对除了XData.Properties.VariableNames{ii}的其他所有因素分组
-% groupNumber: 组编号，其第i个元素表示YData(i,:)对应组因素groupFactor中的行号（可以理解为YData(i,:)属于第groupNumber(i)组）
+% groupNumber: 组编号，其第i个元素表示YData(i, :)对应组因素groupFactor中的行号（可以理解为YData(i, :)属于第groupNumber(i)组）
 % groupNumber: 组因素，即各个组的因素取值情况（从小到大排序）
 [groupNumber, groupFactor] = findgroups(YData(:, YData.Properties.VariableNames(tmpColumn)));
 tmpColumnUnique = unique(YData(:, ii));
@@ -489,7 +489,7 @@ tmpColumn = factorColumnIndex;
 tmpColumn(tmpColumn == ii) = [];
 
 % 对除了XData.Properties.VariableNames{ii}的其他所有因素分组
-% groupNumber: 组编号，其第i个元素表示YData(i,:)对应组因素groupFactor中的行号（可以理解为YData(i,:)属于第groupNumber(i)组）
+% groupNumber: 组编号，其第i个元素表示YData(i, :)对应组因素groupFactor中的行号（可以理解为YData(i, :)属于第groupNumber(i)组）
 % groupNumber: 组因素，即各个组的因素取值情况（从小到大排序）
 [groupNumber, groupFactor] = findgroups(YData(:, YData.Properties.VariableNames(tmpColumn)));
 tmpColumnUnique = unique(YData(:, ii));
@@ -563,7 +563,7 @@ tmpColumn = factorColumnIndex;
 tmpColumn(tmpColumn == ii) = [];
 
 % 对除了XData.Properties.VariableNames{ii}的其他所有因素分组
-% groupNumber: 组编号，其第i个元素表示YData(i,:)对应组因素groupFactor中的行号（可以理解为YData(i,:)属于第groupNumber(i)组）
+% groupNumber: 组编号，其第i个元素表示YData(i, :)对应组因素groupFactor中的行号（可以理解为YData(i, :)属于第groupNumber(i)组）
 % groupNumber: 组因素，即各个组的因素取值情况（从小到大排序）
 [groupNumber, groupFactor] = findgroups(YData(:, YData.Properties.VariableNames(tmpColumn)));
 tmpColumnUnique = unique(YData(:, ii));

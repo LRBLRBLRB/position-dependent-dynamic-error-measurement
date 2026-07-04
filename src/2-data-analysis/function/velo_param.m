@@ -1,4 +1,4 @@
-function [paramTable] = velo_param(time,signal,desiredValue,options)
+function [paramTable] = velo_param(time, signal, desiredValue, options)
 %VELO_PARAM 
 %   Separate the velocity signal to obtain division of each segments, while 
 %   calculate the parameters of a velocity curve
@@ -17,12 +17,12 @@ end
 
 %% stopped parameter calculation
 % if isnan(desiredValue)
-%     [~,ind] = max(abs(signal(round(end/2):end)));
-%     paramTable = struct("peakValue",signal(round(end/2) + ind), ...
-%         "peakError",NaN, "peakMoment", time(round(end/2) + ind), ...
-%         "steadyStateValue",NaN,"steadyStateError",NaN, ...
-%         "riseTime",NaN,"noiseLevel",NaN,"overshoot",NaN, ...
-%         "oscillationFrequency",NaN,"settlingTime",NaN);
+%     [~, ind] = max(abs(signal(round(end/2):end)));
+%     paramTable = struct("peakValue", signal(round(end/2) + ind), ...
+%         "peakError", NaN, "peakMoment", time(round(end/2) + ind), ...
+%         "steadyStateValue", NaN, "steadyStateError", NaN, ...
+%         "riseTime", NaN, "noiseLevel", NaN, "overshoot", NaN, ...
+%         "oscillationFrequency", NaN, "settlingTime", NaN);
 %     return;
 % end
 
@@ -30,9 +30,9 @@ end
 % [peakValue0, peakMoment0]: the peak situation of the start stage of the velocity shifting process
 if options.Fluctuation
     if signal(1) < signal(end)
-        [peakValue,peakInd] = max(signal);
+        [peakValue, peakInd] = max(signal);
     else
-        [peakValue,peakInd] = min(signal);
+        [peakValue, peakInd] = min(signal);
     end
     peakInd0 = length(signal);
     peakValue0 = signal(end);
@@ -65,10 +65,10 @@ peakMoment0 = time(end) - time(peakInd0);
 
 % % 【峰值】
 % if signal(1) < signal(end)
-%     % [peakValue,peakMoment] = max(signal);
+%     % [peakValue, peakMoment] = max(signal);
 %     [tmpPks, tmpLocs] = findpeaks(signal, "NPeaks", 2, "SortStr", "descend");
 % else
-%     % [peakValue,peakMoment] = min(signal);
+%     % [peakValue, peakMoment] = min(signal);
 %     [tmpPks, tmpLocs] = findpeaks(-1 .* signal, "NPeaks", 2, "SortStr", "descend");
 %     tmpPks = -1 .* tmpPks;
 % end
@@ -113,7 +113,7 @@ steadyStateError = steadyStateValue - desiredValue;
 
 % 【上升时间】定义为信号从 10% 上升到 90% 稳态值所需的时间：
 riseTimeEnd = find( ...
-    abs(signal - steadyStateValue) <= 0.1 * abs(signal(1) - steadyStateValue),1);
+    abs(signal - steadyStateValue) <= 0.1 * abs(signal(1) - steadyStateValue), 1);
 riseTime = time(riseTimeEnd) - time(1);
 if isempty(riseTime)
     riseTime = NaN;
@@ -140,17 +140,17 @@ oscillationFrequency = f(max_index); % 改
 settlingTimeIndex = find( ...
     abs(signal - steadyStateValue) <= ...
     options.SettingPercent * abs(signal(1) - steadyStateValue), ...
-    1,'last');
+    1, 'last');
 settlingTime = time(settlingTimeIndex) - time(1);
 if isempty(settlingTime)
     settlingTime = NaN;
 end
 
 % 组装成表结构，以避免部分数据为空时输出数组维度不对应
-% paramName = ["peakValue","steadyStateValue","riseTime","steadyStateError", ...
-%     "noiseLevel","overshoot","oscillationFrequency","settlingTime"];
-% paramVector = [peakValue,steadyStateValue,riseTime,steadyStateError, ...
-%     noiseLevel,overshoot,oscillationFrequency,settlingTime];
+% paramName = ["peakValue", "steadyStateValue", "riseTime", "steadyStateError", ...
+%     "noiseLevel", "overshoot", "oscillationFrequency", "settlingTime"];
+% paramVector = [peakValue, steadyStateValue, riseTime, steadyStateError, ...
+%     noiseLevel, overshoot, oscillationFrequency, settlingTime];
 paramTable = struct("peakValue", peakValue, ...
     "peakError", peakError, ...
     "peakMoment", peakMoment, ...

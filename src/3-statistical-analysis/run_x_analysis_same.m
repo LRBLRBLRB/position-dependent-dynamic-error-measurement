@@ -93,9 +93,9 @@ compareColumnName = XData.Properties.VariableNames(9:17);
 
 %% 统计分析
 % X = [ones(size(XData, 1), 1), XData{:, factorColumn}]; % 添加常数项到数据矩阵
-% ano_p = cell(1,length(responseColumn));
-% ano_tbl = cell(1,length(responseColumn));
-% ano_stats = cell(1,length(responseColumn));
+% ano_p = cell(1, length(responseColumn));
+% ano_tbl = cell(1, length(responseColumn));
+% ano_stats = cell(1, length(responseColumn));
 % for r = 1:length(responseColumn)
 %     % ---------------- 正态性检验 ----------------
 %     currentResponse = XData{:, responseColumn(r)};
@@ -227,7 +227,7 @@ tmpColumn = factorColumnIndex;
 tmpColumn(tmpColumn == ii) = [];
 
 % 对除了XData.Properties.VariableNames{ii}的其他所有因素分组
-% groupNumber: 组编号，其第i个元素表示XData(i,:)对应组因素groupFactor中的行号（可以理解为XData(i,:)属于第groupNumber(i)组）
+% groupNumber: 组编号，其第i个元素表示XData(i, :)对应组因素groupFactor中的行号（可以理解为XData(i, :)属于第groupNumber(i)组）
 % groupNumber: 组因素，即各个组的因素取值情况（从小到大排序）
 [groupNumber, groupFactor] = findgroups(XData(:, XData.Properties.VariableNames(tmpColumn)));
 tmpColumnUnique = unique(XData(:, ii));

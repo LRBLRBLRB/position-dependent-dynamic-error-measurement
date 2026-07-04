@@ -1,5 +1,5 @@
 function varargout = accel_segmentation(t, a, theo_accel, options)
-%ACCEL_SEGMENTATION Seperate acceleration-varying segments for the measaured signal,
+%ACCEL_SEGMENTATION Seperate acceleration-varying segments for the measaured signal, 
 %   and 
 %
 % Inputs: 
@@ -67,18 +67,18 @@ for ii = 1:numElements
 end
 dataValleys = struct2table(dataValleys);
 
-% dataValleys = struct('pks',-1*pks2,'locs',locs2,'w',w2,'p',-1*p2,'ind',ind2);
+% dataValleys = struct('pks', -1*pks2, 'locs', locs2, 'w', w2, 'p', -1*p2, 'ind', ind2);
 % dataValleys.class = round(dataValleys.pks / 100) * 100;
 % dataValleys.error = dataValleys.pks - dataValleys.class;
 
-plot_peaks(t,a,dataPeaks,dataValleys,"PlotName",options.PlotName);
+plot_peaks(t, a, dataPeaks, dataValleys, "PlotName", options.PlotName);
 
 switch nargout
     case 1
         % combine the datapeaks and dataValleys into one sequence
         varargout{1} = [dataPeaks;dataValleys];
-        varargout{1} = sortrows(varargout{1},'locs');
-        % [varargout{1}.locs,sortInd] = sort([dataPeaks.locs;dataValleys.locs]);
+        varargout{1} = sortrows(varargout{1}, 'locs');
+        % [varargout{1}.locs, sortInd] = sort([dataPeaks.locs;dataValleys.locs]);
         % tmp = [dataPeaks.ind;dataValleys.ind];
         % varargout{1}.ind = tmp(sortInd);
         % tmp = [dataPeaks.pks;dataValleys.pks];

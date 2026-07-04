@@ -89,9 +89,9 @@ end
 
 %% 统计分析
 % X = [ones(size(YData, 1), 1), YData{:, factorColumn}]; % 添加常数项到数据矩阵
-% ano_p = cell(1,length(responseColumn));
-% ano_tbl = cell(1,length(responseColumn));
-% ano_stats = cell(1,length(responseColumn));
+% ano_p = cell(1, length(responseColumn));
+% ano_tbl = cell(1, length(responseColumn));
+% ano_stats = cell(1, length(responseColumn));
 % for r = 1:length(responseColumn)
 %     % ---------------- 正态性检验 ----------------
 %     currentResponse = YData{:, responseColumn(r)};

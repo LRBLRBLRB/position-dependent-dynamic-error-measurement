@@ -2,11 +2,11 @@ function varargout = peak_segmentation(t, x, theoAccel, varargin)
 %PEAK_SEGMENTATION  Extract speed-varying segments for displacement
 % 
 % Usage:
-%   For displacement segmetation,
+%   For displacement segmetation, 
 %       dataPeaks = peak_segmentation(t, x)
 %       dataPeaks = peak_segmentation(t, x, [], "Name", "Value")
 %       [dataPeaks, dataValleys] = peak_segmentation(__)
-%   For acceleration segmentation,
+%   For acceleration segmentation, 
 %       dataPeaks = peak_segmentation(t, x, theoAccel)
 %       dataPeaks = peak_segmentation(t, x, theoAccel, "Name", "Value")
 %       [dataPeaks, dataValleys] = peak_segmentation(__)
@@ -75,7 +75,7 @@ if p.Results.Display
 end
 
 % 使用findpeaks函数检测局部最大值（峰值）
-[pks1,locs1,w1,p1] = findpeaks(x, t, ...
+[pks1, locs1, w1, p1] = findpeaks(x, t, ...
     'MinPeakProminence', p.Results.MinPeakProminence, ...
     'MinPeakDistance', p.Results.MinPeakDistance, ...
     'MinPeakHeight', p.Results.MinPeakHeight, ...
@@ -83,7 +83,7 @@ end
     'MaxPeakWidth', p.Results.MaxPeakWidth);
 
 % 使用findpeaks函数检测局部最小值（谷值），对信号取负值
-[pks2,locs2,w2,p2] = findpeaks(-1 * x, t, ...
+[pks2, locs2, w2, p2] = findpeaks(-1 * x, t, ...
     'MinPeakProminence', p.Results.MinPeakProminence, ...
     'MinPeakDistance', p.Results.MinPeakDistance, ...
     'MinPeakHeight', p.Results.MinPeakHeight, ...
@@ -102,8 +102,8 @@ end
 % 归一化：把每次实验的位移数据开始位置统一【结束不统一因为有的结束得太早了】
 % start from the moment p.Results.StartTime
 if p.Results.IsNormalization
-    locMin = min(min(locs1),min(locs2)) - p.Results.StartTime;
-    locMinInd = find(t <= locMin,1,'last');
+    locMin = min(min(locs1), min(locs2)) - p.Results.StartTime;
+    locMinInd = find(t <= locMin, 1, 'last');
     t = t(locMinInd + 1:end) - locMin;
     x = x(locMinInd + 1:end);
     % get the indices and locations of the peak and valley after substracting
@@ -141,12 +141,12 @@ for ii = 1:numElements
 end
 dataValleys = struct2table(dataValleys);
 
-% dataValleys = struct('pks',-1*pks2,'locs',locs2,'w',w2,'p',-1*p2,'ind',ind2);
+% dataValleys = struct('pks', -1*pks2, 'locs', locs2, 'w', w2, 'p', -1*p2, 'ind', ind2);
 % dataValleys.class = round(dataValleys.pks / 100) * 100;
 % dataValleys.error = dataValleys.pks - dataValleys.class;
 
 if ~isempty(p.Results.PlotName)
-    plot_peaks(t,x,dataPeaks,dataValleys,"PlotName",p.Results.PlotName);
+    plot_peaks(t, x, dataPeaks, dataValleys, "PlotName", p.Results.PlotName);
 end
 
 switch nargout

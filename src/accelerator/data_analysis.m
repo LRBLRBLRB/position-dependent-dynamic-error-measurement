@@ -21,8 +21,8 @@ end
 
 % 绘制图表
 figure;
-tmp = get(gcf,'Position');
-set(gcf,'Position',[tmp(1:3),tmp(4)/2]);
+tmp = get(gcf, 'Position');
+set(gcf, 'Position', [tmp(1:3), tmp(4)/2]);
 % subplot(3, 1, 1);
 % plot(timestamps, acc_x, 'r');
 % xlabel('Time');

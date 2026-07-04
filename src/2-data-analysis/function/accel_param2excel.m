@@ -41,13 +41,13 @@ for ii = 1:num / 2
         case num / 2
             % 最后一部分：低速包括3正2反；高速包括3正3反
             kPositiveSlow = 2:4;
-            kPositiveFast = [1,5:7];
+            kPositiveFast = [1, 5:7];
             kNegativeSlow = 1:2;
             kNegativeFast = 3:5;
         otherwise
             % 其他部分往返：低速包括3正2反；高速包括4正4反
             kPositiveSlow = 2:4;
-            kPositiveFast = [1,5:7];
+            kPositiveFast = [1, 5:7];
             kNegativeSlow = 1:2;
             kNegativeFast = 3:6;
     end
