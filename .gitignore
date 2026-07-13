@@ -1,6 +1,10 @@
 # Created by https://www.toptal.com/developers/gitignore/api/python,matlab
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,matlab
 
+### macOS ###
+
+.DS_Store
+
 ### MATLAB ###
 # Windows default autosave extension
 *.asv
